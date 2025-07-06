@@ -41,9 +41,15 @@ export default function GamingSetup3D() {
   useEffect(() => {
     function handleResize() {
       const w = window.innerWidth;
-      setHeight(Math.max(220, Math.min(window.innerHeight * 0.6, 700)));
-      setModelScale(w < 500 ? 0.38 : w < 700 ? 0.5 : 0.7);
-      setWidth(w < 700 ? "96vw" : "100%"); // Make window smaller on mobile
+      if (w < 700) {
+        setHeight(260); // or 220/240/280, adjust as you like for mobile
+        setWidth("96vw");
+        setModelScale(w < 500 ? 0.38 : 0.5);
+      } else {
+        setHeight(Math.max(320, Math.min(window.innerHeight * 0.6, 700)));
+        setWidth("100%");
+        setModelScale(0.7);
+      }
     }
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -56,7 +62,17 @@ export default function GamingSetup3D() {
   const screenTarget = [-5, 1, 0];
 
   return (
-    <div style={{ width, height, position: "relative", margin: "0 auto" }}>
+    <div
+      style={{
+        width,
+        height,
+        position: "relative",
+        margin: "0 auto",
+        touchAction: "pan-y", // helps scrolling on mobile
+        maxWidth: "100vw",
+        overflow: "hidden"
+      }}
+    >
       <MouseDragHint />
       <Canvas camera={{ position: cameraPosition, fov: 28 }}>
         <ambientLight intensity={0.8} />
