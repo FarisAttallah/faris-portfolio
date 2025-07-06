@@ -32,8 +32,8 @@ export default function VantaBG() {
       ref={vantaRef}
       style={{
         position: "fixed",
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         top: 0,
         left: 0,
         zIndex: -1,

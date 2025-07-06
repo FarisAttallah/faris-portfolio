@@ -8,7 +8,7 @@ const idleAnim = {
 export default function Overview() {
   return (
     <section>
-      <h2>Overview</h2>
+      <h2 className="section-heading">Overview</h2>
       <div
         data-aos="fade-up"
         style={{
@@ -16,6 +16,7 @@ export default function Overview() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '2rem',
+          width: '100%',
         }}
       >
         <p style={{ maxWidth: 700, textAlign: 'center' }}>
@@ -32,11 +33,12 @@ export default function Overview() {
             gap: '2.5rem',
             justifyContent: 'center',
             alignItems: 'center',
+            minWidth: '100%',
           }}
         >
           {/* Backend */}
           <div
-            data-aos="zoom-in"
+            data-aos="fade-up"
             data-aos-delay="100"
             style={{
               background: 'linear-gradient(135deg, #23243a 0%, #915EFF 100%)',
@@ -80,7 +82,7 @@ export default function Overview() {
           </div>
           {/* Frontend */}
           <div
-            data-aos="zoom-in"
+            data-aos="fade-up"
             data-aos-delay="200"
             style={{
               background: 'linear-gradient(135deg, #23243a 0%, #ff50c8 100%)',
@@ -124,7 +126,7 @@ export default function Overview() {
           </div>
           {/* CI/CD */}
           <div
-            data-aos="zoom-in"
+            data-aos="fade-up"
             data-aos-delay="300"
             style={{
               background: 'linear-gradient(135deg, #23243a 0%, #50ffd2 100%)',
@@ -168,7 +170,7 @@ export default function Overview() {
           </div>
           {/* Cloud */}
           <div
-            data-aos="zoom-in"
+            data-aos="fade-up"
             data-aos-delay="400"
             style={{
               background: 'linear-gradient(135deg, #23243a 0%, #8ab4f8 100%)',

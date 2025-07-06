@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import { FaJava, FaPython, FaNodeJs, FaHtml5, FaCss3Alt, FaLinux, FaGitAlt } from "react-icons/fa";
 import { SiCplusplus, SiC, SiRuby, SiJavascript, SiAngular, SiPostgresql, SiHaskell, SiOcaml } from "react-icons/si";
 
 export default function WorkExperience() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 700);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const jobs = [
     {
       company: "M&T Bank",
@@ -45,7 +55,6 @@ export default function WorkExperience() {
     "linear-gradient(120deg, #23243a 60%, #2563eb 100%)",
   ];
 
-  // List your tech skills here with icon and label
   const skills = [
     { icon: <FaJava color="#e76f00" />, label: "Java" },
     { icon: <FaPython color="#3776ab" />, label: "Python" },
@@ -68,23 +77,27 @@ export default function WorkExperience() {
     <section id="work-experience">
       <h2
         style={{
-          fontSize: 32,
+          fontSize: isMobile ? 24 : 32,
           fontWeight: 700,
           letterSpacing: 1,
           color: "#e0e7ef",
           textAlign: "center",
-          marginBottom: "2.5rem",
+          marginBottom: isMobile ? "1.5rem" : "2.5rem",
         }}
       >
         Work Experience
       </h2>
       <div
         style={{
-          maxWidth: 900,
-          margin: "0 auto",
+          width: isMobile ? "94vw" : 900,
+          maxWidth: isMobile ? "94vw" : 900,
+          margin: isMobile ? "0 auto" : "0 auto",
+          paddingLeft: isMobile ? "3vw" : 0,   // Add margin to left
+          paddingRight: isMobile ? "3vw" : 0,  // Add margin to right
           display: "flex",
           flexDirection: "column",
-          gap: "2.5rem",
+          gap: isMobile ? "1.2rem" : "2.5rem",
+          padding: 0,
         }}
       >
         {jobs.map((job, idx) => (
@@ -92,18 +105,18 @@ export default function WorkExperience() {
             key={job.company + job.title}
             data-aos="fade-up"
             data-aos-delay={100 * idx}
-            data-aos-offset="60" // <-- Show animation earlier (default is 120)
+            data-aos-offset="60"
             style={{
               background: bgGradients[idx % bgGradients.length],
               borderRadius: "1.25rem",
               boxShadow: "0 8px 36px 0 rgba(36,40,60,0.16)",
-              padding: "2.2rem 2.2rem 2rem 2.2rem",
+              padding: isMobile ? "1.2rem 0.8rem 1.1rem 0.8rem" : "2.2rem 2.2rem 2rem 2.2rem",
               display: "flex",
               alignItems: "flex-start",
-              gap: "1.5rem",
+              gap: isMobile ? "0.7rem" : "1.5rem",
               position: "relative",
               overflow: "hidden",
-              minHeight: 170,
+              minHeight: isMobile ? 120 : 170,
               borderLeft: `6px solid ${job.color}`,
               transition: "transform 0.3s, box-shadow 0.3s",
               backdropFilter: "blur(2px)",
@@ -120,8 +133,8 @@ export default function WorkExperience() {
             {/* Decorative dot */}
             <div
               style={{
-                width: 24,
-                height: 24,
+                width: isMobile ? 18 : 24,
+                height: isMobile ? 18 : 24,
                 borderRadius: "50%",
                 background: job.color,
                 marginRight: 10,
@@ -147,7 +160,7 @@ export default function WorkExperience() {
                   style={{
                     color: "#fff",
                     fontWeight: 600,
-                    fontSize: 20,
+                    fontSize: isMobile ? 16 : 20,
                     margin: 0,
                     letterSpacing: 0.5,
                     lineHeight: 1.2,
@@ -159,7 +172,7 @@ export default function WorkExperience() {
                   style={{
                     color: "#e0e7ef",
                     fontWeight: 400,
-                    fontSize: 15,
+                    fontSize: isMobile ? 13 : 15,
                     opacity: 0.85,
                     marginLeft: 2,
                   }}
@@ -170,12 +183,12 @@ export default function WorkExperience() {
                 <span
                   style={{
                     color: "#23243a",
-                    fontSize: 14,
+                    fontSize: isMobile ? 12 : 14,
                     fontWeight: 600,
                     marginLeft: "auto",
                     background: "#fff8",
                     borderRadius: 8,
-                    padding: "2px 12px",
+                    padding: isMobile ? "2px 8px" : "2px 12px",
                     letterSpacing: 0.5,
                   }}
                 >
@@ -185,9 +198,9 @@ export default function WorkExperience() {
               <ul
                 style={{
                   color: "#f3f4f6",
-                  fontSize: 15.5,
+                  fontSize: isMobile ? 13.5 : 15.5,
                   margin: "16px 0 0 0",
-                  paddingLeft: 22,
+                  paddingLeft: isMobile ? 16 : 22,
                   listStyle: "disc",
                   lineHeight: 1.7,
                   opacity: 0.96,
@@ -204,8 +217,8 @@ export default function WorkExperience() {
                 position: "absolute",
                 right: -60,
                 bottom: -60,
-                width: 170,
-                height: 170,
+                width: isMobile ? 100 : 170,
+                height: isMobile ? 100 : 170,
                 background: job.color,
                 opacity: 0.11,
                 filter: "blur(36px)",
@@ -220,8 +233,8 @@ export default function WorkExperience() {
                 position: "absolute",
                 top: -30,
                 right: -30,
-                width: 80,
-                height: 80,
+                width: isMobile ? 50 : 80,
+                height: isMobile ? 50 : 80,
                 background: job.color,
                 opacity: 0.10,
                 filter: "blur(18px)",
@@ -233,15 +246,15 @@ export default function WorkExperience() {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: "3.5rem" }}>
+      <div style={{ marginTop: isMobile ? "2rem" : "3.5rem" }}>
         <h3
           style={{
-            fontSize: 24,
+            fontSize: isMobile ? 18 : 24,
             fontWeight: 700,
             letterSpacing: 1,
             color: "#e0e7ef",
             textAlign: "center",
-            marginBottom: "2rem",
+            marginBottom: isMobile ? "1.2rem" : "2rem",
           }}
         >
           Tech Skills
@@ -251,11 +264,11 @@ export default function WorkExperience() {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: "2.2rem",
+            gap: isMobile ? "1.2rem" : "2.2rem",
           }}
         >
           {skills.map((skill) => (
-            <SkillIcon key={skill.label} icon={skill.icon} label={skill.label} />
+            <SkillIcon key={skill.label} icon={skill.icon} label={skill.label} isMobile={isMobile} />
           ))}
         </div>
       </div>
@@ -275,7 +288,7 @@ export default function WorkExperience() {
 }
 
 // Helper component for skill icons
-function SkillIcon({ icon, label }) {
+function SkillIcon({ icon, label, isMobile }) {
   return (
     <div
       style={{
@@ -283,20 +296,20 @@ function SkillIcon({ icon, label }) {
         flexDirection: "column",
         alignItems: "center",
         gap: 8,
-        minWidth: 70,
+        minWidth: isMobile ? 50 : 70,
       }}
     >
       <div
         style={{
-          width: 44,
-          height: 44,
+          width: isMobile ? 34 : 44,
+          height: isMobile ? 34 : 44,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           background: "rgba(36,40,60,0.12)",
           borderRadius: "0.75rem",
           boxShadow: "0 2px 8px #23243a55",
-          fontSize: 34,
+          fontSize: isMobile ? 24 : 34,
         }}
       >
         {icon}
@@ -304,7 +317,7 @@ function SkillIcon({ icon, label }) {
       <span
         style={{
           color: "#d1d5db",
-          fontSize: 14,
+          fontSize: isMobile ? 11 : 14,
           fontWeight: 500,
           marginTop: 2,
           letterSpacing: 0.5,

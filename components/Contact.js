@@ -1,9 +1,23 @@
 import { FaEnvelope, FaLinkedin, FaPaperPlane, FaRegSmile } from "react-icons/fa";
 
 export default function Contact() {
+  // Responsive padding for mobile
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 700;
+
   return (
-    <section id="contact" className="contact-section">
-      <h2 className="contact-heading">Contact Me</h2>
+    <section
+      id="contact"
+      className="contact-section"
+      style={{
+        paddingLeft: isMobile ? "3vw" : undefined,
+        paddingRight: isMobile ? "3vw" : undefined,
+        width: isMobile ? "94vw" : undefined,
+        maxWidth: isMobile ? "94vw" : undefined,
+        margin: isMobile ? "0 auto" : undefined,
+        boxSizing: "border-box",
+      }}
+    >
+      <h2 className="section-heading">Contact Me</h2>
       <div className="contact-flex">
         {/* Left: Contact Form */}
         <div className="contact-form-container">

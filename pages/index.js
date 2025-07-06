@@ -20,7 +20,7 @@ export default function Home() {
       <Header />
       <main>
         {/* --- HERO SECTION --- */}
-        <section className="hero-title" data-aos="zoom-in">
+        <section className="hero-title" data-aos="fade-up">
           <div className="hero-flex">
             {/* Animated Left Accent */}
             <div className="hero-accent hero-accent-left">
@@ -78,7 +78,7 @@ export default function Home() {
           <div className="hero-float hero-float-right" />
         </section>
         {/* Place the 3D Gaming Setup section immediately after the hero section */}
-        <section id="gaming-setup" data-aos="zoom-in-up" data-aos-delay="150" style={{ marginTop: '-9rem'}}>
+        <section id="gaming-setup" data-aos="fade-right" data-aos-delay="150" style={{ marginTop: '-7%'}}>
           <GamingSetup3D />
         </section>
         <section id="overview" data-aos="fade-right" data-aos-delay="400">

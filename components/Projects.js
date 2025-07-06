@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import { FaExternalLinkAlt, FaGithub, FaReact, FaCogs } from "react-icons/fa";
 import { SiNextdotjs, SiJest } from "react-icons/si";
 import { VscAzureDevops } from "react-icons/vsc";
 import { TiVendorMicrosoft } from "react-icons/ti";
 
 export default function Projects() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 700);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const projects = [
     {
       title: "Personal Portfolio",
@@ -125,14 +135,20 @@ Pack-a-Punch only works from behind—consider it a feature :)
 
   return (
     <section>
-      <h2 style={{ textAlign: "center", marginBottom: "2.5rem" }}>Projects</h2>
+      <h2 className="section-heading">Projects</h2>
       <div
         style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "2.5rem",
+          gap: isMobile ? "1.2rem" : "2.5rem",
           justifyContent: "center",
           alignItems: "stretch",
+          width: isMobile ? "94vw" : "100%",
+          maxWidth: isMobile ? "94vw" : "100%",
+          margin: isMobile ? "0 auto" : undefined,
+          paddingLeft: isMobile ? "3vw" : 0,
+          paddingRight: isMobile ? "3vw" : 0,
+          boxSizing: "border-box",
         }}
       >
         {projects.map((project, idx) => (
@@ -141,16 +157,16 @@ Pack-a-Punch only works from behind—consider it a feature :)
             data-aos="zoom-in-up"
             data-aos-delay={100 * idx}
             style={{
-              background: "rgba(36,40,60,0.55)", // glassmorphism background
-              backdropFilter: "blur(18px)",      // frosted glass effect
-              WebkitBackdropFilter: "blur(18px)", // for Safari support
+              background: "rgba(36,40,60,0.55)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
               border: `1.5px solid ${project.color}55`,
               borderRadius: "1.25rem",
               boxShadow: `0 8px 36px 0 ${project.color}22`,
-              padding: "2.7rem 2.2rem 2.2rem 2.2rem",
-              minWidth: 340,
-              maxWidth: 500,
-              flex: "1 1 420px",
+              padding: isMobile ? "1.5rem 0.8rem 1.2rem 0.8rem" : "2.7rem 2.2rem 2.2rem 2.2rem",
+              minWidth: isMobile ? 220 : 340,
+              maxWidth: isMobile ? 340 : 500,
+              flex: isMobile ? "1 1 220px" : "1 1 420px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -180,10 +196,10 @@ Pack-a-Punch only works from behind—consider it a feature :)
                 <span
                   key={i}
                   style={{
-                    fontSize: 28,
+                    fontSize: isMobile ? 22 : 28,
                     background: "rgba(36,40,60,0.13)",
                     borderRadius: "0.6rem",
-                    padding: 6,
+                    padding: isMobile ? 4 : 6,
                     boxShadow: "0 2px 8px #23243a33",
                     animation: "iconFloat 2.2s ease-in-out infinite",
                     animationDelay: `${i * 0.2 + 0.1 * idx}s`,
@@ -197,7 +213,7 @@ Pack-a-Punch only works from behind—consider it a feature :)
               style={{
                 color: "#fff",
                 fontWeight: 600,
-                fontSize: 20,
+                fontSize: isMobile ? 16 : 20,
                 margin: 0,
                 letterSpacing: 0.5,
                 marginBottom: 10,
@@ -208,10 +224,10 @@ Pack-a-Punch only works from behind—consider it a feature :)
             <p
               style={{
                 color: "#e0e7ef",
-                fontSize: 15.5,
+                fontSize: isMobile ? 13.5 : 15.5,
                 marginBottom: 18,
                 opacity: 0.96,
-                minHeight: 70,
+                minHeight: isMobile ? 40 : 70,
               }}
             >
               {project.description}
@@ -222,13 +238,13 @@ Pack-a-Punch only works from behind—consider it a feature :)
                 style={{
                   background: "rgba(36,40,60,0.13)",
                   borderRadius: "0.75rem",
-                  padding: "1rem",
+                  padding: isMobile ? "0.7rem" : "1rem",
                   color: "#f3f4f6",
-                  fontSize: 14,
+                  fontSize: isMobile ? 12 : 14,
                   marginBottom: 10,
                   whiteSpace: "pre-line",
                   opacity: 0.93,
-                  maxHeight: 220,
+                  maxHeight: isMobile ? 120 : 220,
                   overflowY: "auto",
                 }}
                 dangerouslySetInnerHTML={{ __html: project.details.replace(/\n/g, "<br/>") }}
@@ -245,9 +261,9 @@ Pack-a-Punch only works from behind—consider it a feature :)
                     color: "#fff",
                     background: "#23243a",
                     borderRadius: 8,
-                    padding: "6px 14px",
+                    padding: isMobile ? "5px 10px" : "6px 14px",
                     fontWeight: 500,
-                    fontSize: 15,
+                    fontSize: isMobile ? 13 : 15,
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
@@ -269,8 +285,8 @@ Pack-a-Punch only works from behind—consider it a feature :)
                 position: "absolute",
                 right: -60,
                 bottom: -60,
-                width: 140,
-                height: 140,
+                width: isMobile ? 80 : 140,
+                height: isMobile ? 80 : 140,
                 background: project.color,
                 opacity: 0.13,
                 filter: "blur(32px)",
