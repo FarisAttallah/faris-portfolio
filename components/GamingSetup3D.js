@@ -42,11 +42,11 @@ export default function GamingSetup3D() {
     function handleResize() {
       const w = window.innerWidth;
       if (w < 700) {
-        setHeight(260); // or 220/240/280, adjust as you like for mobile
-        setWidth("96vw");
-        setModelScale(w < 500 ? 0.38 : 0.5);
+        setHeight(180); // smaller height for mobile
+        setWidth("90vw"); // smaller width for mobile
+        setModelScale(w < 500 ? 0.34 : 0.44); // slightly smaller model
       } else {
-        setHeight(Math.max(320, Math.min(window.innerHeight * 0.6, 700)));
+        setHeight(Math.max(320, Math.min(window.innerHeight * 0.5, 600))); // slightly smaller max height for desktop
         setWidth("100%");
         setModelScale(0.7);
       }
