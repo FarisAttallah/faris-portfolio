@@ -7,8 +7,18 @@ import Projects from '../components/Projects'
 import Contact from '../components/Contact'
 import GamingSetup3D from '../components/GamingSetup3D'
 import { FaCode, FaGamepad, FaCloud, FaRocket, FaGithub, FaLinkedin } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [showGamingSetup, setShowGamingSetup] = useState(true);
+
+  useEffect(() => {
+    const checkScreen = () => setShowGamingSetup(window.innerWidth >= 700);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
   return (
     <>
       <Head>
@@ -77,10 +87,12 @@ export default function Home() {
           <div className="hero-float hero-float-left" />
           <div className="hero-float hero-float-right" />
         </section>
-        {/* Place the 3D Gaming Setup section immediately after the hero section */}
-        <section id="gaming-setup" data-aos="fade-right" data-aos-delay="150" style={{ marginTop: '-7%'}}>
-          <GamingSetup3D />
-        </section>
+        {/* Show the 3D Gaming Setup section only on big screens */}
+        {showGamingSetup && (
+          <section id="gaming-setup" data-aos="fade-right" data-aos-delay="150" style={{ marginTop: '-7%'}}>
+            <GamingSetup3D />
+          </section>
+        )}
         <section id="overview" data-aos="fade-right" data-aos-delay="400">
           <Overview />
         </section>
