@@ -52,7 +52,6 @@ public/models/*.tmp
 public/models/*.bak
 
 # Optional: ignore build cache for three.js/gltf
-public/models/*.bin
 public/models/*.glb
 
 # Ignore next/image cache
