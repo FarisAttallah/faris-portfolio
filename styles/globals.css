@@ -2,16 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================
+   SCROLL BEHAVIOR & RESET
+   ========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
 body {
-  background: linear-gradient(-45deg, #23243a, #1a1b2e, #2d1e4f, #111216);
+  background: linear-gradient(-45deg, #1e293b, #0f172a, #164e63, #111827);
   background-size: 400% 400%;
+  background-attachment: fixed;
   animation: gradientBG 18s ease infinite;
   color: #e5e7eb;
   font-family: 'Poppins', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   letter-spacing: 0.01em;
   line-height: 1.7;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   transition: background 0.3s, color 0.3s;
+}
+
+#__next {
+  width: 100%;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ==========================================
+   AOS ANIMATION FIXES - PREVENT LAYOUT SHIFT
+   ========================================== */
+
+[data-aos] {
+  opacity: 1 !important; /* Override AOS default opacity: 0 */
+  transform: none !important; /* Override AOS transforms initially */
+  transition-property: opacity, transform;
+  transition-duration: 0.8s;
+  transition-timing-function: ease-out;
+}
+
+[data-aos].aos-animate {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Specific AOS animation overrides to prevent layout shifts */
+[data-aos="fade-up"]:not(.aos-animate) {
+  opacity: 0.3 !important; /* Subtle fade instead of completely hidden */
+  transform: translateY(20px) !important; /* Small transform instead of large */
+}
+
+[data-aos="fade-left"]:not(.aos-animate) {
+  opacity: 0.3 !important;
+  transform: translateX(20px) !important;
+}
+
+[data-aos="fade-right"]:not(.aos-animate) {
+  opacity: 0.3 !important;
+  transform: translateX(-20px) !important;
 }
 
 section {
@@ -75,14 +133,7 @@ p {
   text-align: center;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background: #181a20;
-}
-::-webkit-scrollbar-thumb {
-  background: #23262f;
-  border-radius: 4px;
-}
+
 
 /* --- HEADER REWRITE --- */
 .header-nav {
@@ -92,10 +143,10 @@ p {
   left: 0;
   z-index: 50;
   background: rgba(17, 18, 22, 0.75);
-  border-bottom: 1px solid #23243a;
+  border-bottom: 1px solid #1e293b;
   padding: 0.5rem 0;
   backdrop-filter: blur(12px);
-  box-shadow: 0 2px 16px 0 rgba(36, 40, 60, 0.12);
+  box-shadow: 0 2px 16px 0 rgba(30, 41, 59, 0.12);
   transition: background 0.3s;
 }
 
@@ -109,12 +160,12 @@ p {
 }
 
 .header-title {
-  color: #b6aaff;
+  color: #3b82f6;
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  text-shadow: 0 2px 12px #23243a88;
+  text-shadow: 0 2px 12px #1e293b88;
   transition: color 0.2s;
   z-index: 102;
 }
@@ -135,16 +186,16 @@ p {
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 1px 8px 0 rgba(36, 40, 60, 0.08);
+  box-shadow: 0 1px 8px 0 rgba(30, 41, 59, 0.08);
   backdrop-filter: blur(2px);
   display: block;
 }
 
 .header-links li a:hover,
 .header-links li a:focus {
-  background: rgba(145, 94, 255, 0.10);
-  color: #b6aaff;
-  box-shadow: 0 2px 12px 0 rgba(145, 94, 255, 0.12);
+  background: rgba(59, 130, 246, 0.10);
+  color: #3b82f6;
+  box-shadow: 0 2px 12px 0 rgba(59, 130, 246, 0.12);
 }
 
 /* Hamburger button hidden on desktop */
@@ -152,7 +203,7 @@ p {
   display: none;
   background: none;
   border: none;
-  color: #b6aaff;
+  color: #3b82f6;
   font-size: 2rem;
   cursor: pointer;
   margin-left: auto;
@@ -834,5 +885,382 @@ main {
     font-size: 1.5rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
+  }
+}
+
+/* ==========================================
+   HOME PAGE LAYOUT & NAVIGATION CARDS
+   ========================================== */
+
+.home-container {
+  margin: 0 auto;
+  padding: 0 2rem;
+  overflow-x: hidden;
+}
+
+.home-navigation {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.nav-card {
+  position: relative;
+  padding: 2.5rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.nav-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(145, 94, 255, 0.1), rgba(123, 211, 252, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 20px;
+}
+
+.nav-card:hover::before {
+  opacity: 1;
+}
+
+.nav-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(145, 94, 255, 0.3);
+  box-shadow: 0 20px 40px rgba(145, 94, 255, 0.15);
+}
+
+.nav-card-icon {
+  font-size: 3rem;
+  color: #915EFF;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.nav-card:hover .nav-card-icon {
+  transform: scale(1.1);
+  color: #7dd3fc;
+}
+
+.nav-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #f3f4f6;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.nav-card p {
+  color: #9ca3af;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.nav-card-arrow {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: #915EFF;
+  transition: all 0.3s ease;
+}
+
+.nav-card:hover .nav-card-arrow {
+  transform: translateX(5px);
+  color: #7dd3fc;
+}
+
+/* ==========================================
+   INDIVIDUAL PAGE LAYOUT
+   ========================================== */
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+  overflow-x: hidden;
+  min-height: calc(100vh - 120px);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-top: 2rem;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #915EFF, #7dd3fc, #ff50c8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: #9ca3af;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+/* ==========================================
+   HEADER ACTIVE STATES
+   ========================================== */
+
+.header-links a.active,
+.header-mobile-menu a.active {
+  color: #915EFF !important;
+  font-weight: 600;
+}
+
+.header-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #915EFF, #7dd3fc);
+  border-radius: 1px;
+}
+
+.header-links a {
+  position: relative;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS
+   ========================================== */
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 0 1rem;
+  }
+  
+  .nav-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .nav-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .nav-card-icon {
+    font-size: 2.5rem;
+  }
+  
+  .page-container {
+    padding: 1.5rem;
+  }
+  
+  .about-section {
+    padding: 0 0.5rem;
+  }
+  
+  .timeline-content {
+    margin-left: 0.5rem;
+  }
+  
+  .job-card {
+    margin: 0 0.25rem;
+    padding: 1.5rem !important;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================
+   PROJECT IMAGE CONTAINER
+   ========================================== */
+
+.project-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  width: 100%;
+  height: 200px;
+}
+
+.project-image-container img {
+  transition: transform 0.3s ease;
+}
+
+.project-image-container:hover img {
+  transform: scale(1.05);
+}
+
+/* ==========================================
+   COMPANY LOGO CONTAINER
+   ========================================== */
+
+.job-header {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.job-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+.job-left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 0 0 auto;
+  max-width: 300px;
+  min-width: 250px;
+}
+
+.job-right-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 16px;
+  text-align: right;
+  flex: 1;
+  min-width: 200px;
+  padding-top: 8px;
+  width: 100%;
+}
+
+.company-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 280px;
+  height: 80px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.job-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  text-align: left;
+  width: 280px;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+
+.job-duration {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: right;
+  line-height: 1.2;
+  align-self: flex-end;
+  width: auto;
+}
+
+.job-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.job-meta span {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  font-size: 0.9rem;
+  text-align: right;
+  margin-left: auto;
+}
+
+.job-date, .job-location {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.job-type {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  .job-header-top {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 0.5rem;
+  }
+  
+  .job-left-section {
+    max-width: 100%;
+    padding: 0 0.25rem;
+  }
+  
+  .job-right-section {
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    min-width: auto;
+    padding: 0 0.25rem;
+  }
+  
+  .job-meta {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .company-logo-container {
+    width: calc(100% - 1rem);
+    max-width: 260px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+  
+  .job-title {
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 0 0.25rem;
   }
 }

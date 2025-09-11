@@ -1,24 +1,11 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Header from '../components/Header'
 import VantaBG from '../components/VantaBG'
 import Overview from '../components/Overview'
-import About from '../components/About'
-import Projects from '../components/Projects'
-import Contact from '../components/Contact'
-import GamingSetup3D from '../components/GamingSetup3D'
-import { FaCode, FaGamepad, FaCloud, FaRocket, FaGithub, FaLinkedin } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { FaCode, FaGamepad, FaCloud, FaRocket, FaGithub, FaLinkedin, FaUser, FaProjectDiagram, FaEnvelope } from "react-icons/fa";
 
 export default function Home() {
-  const [showGamingSetup, setShowGamingSetup] = useState(true);
-
-  useEffect(() => {
-    const checkScreen = () => setShowGamingSetup(window.innerWidth >= 700);
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
-
   return (
     <>
       <Head>
@@ -28,7 +15,7 @@ export default function Home() {
       
       <VantaBG />
       <Header />
-      <main>
+      <main className="home-container">
         {/* --- HERO SECTION --- */}
         <section className="hero-title" data-aos="fade-up">
           <div className="hero-flex">
@@ -58,7 +45,7 @@ export default function Home() {
               {/* Social Buttons */}
               <div className="hero-socials">
                 <a
-                  href="https://github.com/"
+                  href="https://github.com/FarisAttallah"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hero-social-btn hero-social-github"
@@ -87,23 +74,42 @@ export default function Home() {
           <div className="hero-float hero-float-left" />
           <div className="hero-float hero-float-right" />
         </section>
-        {/* Show the 3D Gaming Setup section only on big screens */}
-        {showGamingSetup && (
-          <section id="gaming-setup" data-aos="fade-right" data-aos-delay="150" style={{ marginTop: '-7%'}}>
-            <GamingSetup3D />
-          </section>
-        )}
-        <section id="overview" data-aos="fade-right" data-aos-delay="400">
+
+        {/* --- OVERVIEW SECTION --- */}
+        <section id="overview" data-aos="fade-up" data-aos-delay="300">
           <Overview />
         </section>
-        <section id="about" data-aos="fade-left" data-aos-delay="400">
-          <About />
-        </section>
-        <section id="projects" data-aos="fade-up" data-aos-delay="400">
-          <Projects />
-        </section>
-        <section id="contact" data-aos="fade-up" data-aos-delay="500">
-          <Contact />
+
+        {/* --- NAVIGATION BUTTONS --- */}
+        <section className="home-navigation" data-aos="fade-up" data-aos-delay="400">
+          <div className="nav-grid">
+            <Link href="/about" className="nav-card">
+              <div className="nav-card-icon">
+                <FaUser />
+              </div>
+              <h3>About Me</h3>
+              <p>Learn about my journey and experience</p>
+              <div className="nav-card-arrow">→</div>
+            </Link>
+            
+            <Link href="/projects" className="nav-card">
+              <div className="nav-card-icon">
+                <FaProjectDiagram />
+              </div>
+              <h3>My Projects</h3>
+              <p>Explore my work and achievements</p>
+              <div className="nav-card-arrow">→</div>
+            </Link>
+            
+            <Link href="/contact" className="nav-card">
+              <div className="nav-card-icon">
+                <FaEnvelope />
+              </div>
+              <h3>Contact</h3>
+              <p>Let's work together</p>
+              <div className="nav-card-arrow">→</div>
+            </Link>
+          </div>
         </section>
       </main>
     </>

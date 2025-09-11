@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   // Prevent scroll when mobile menu is open
   useEffect(() => {
@@ -28,10 +31,12 @@ export default function Header() {
   // Close menu on link click (for mobile UX)
   const handleLinkClick = () => setOpen(false);
 
+  const isActive = (path) => router.pathname === path;
+
   return (
     <header className="header-nav">
       <nav className="header-container">
-        <div className="header-title">Faris Attallah</div>
+        <Link href="/" className="header-title">Faris Attallah</Link>
         {/* Hamburger for mobile (always rendered, hidden by CSS on desktop) */}
         <button
           className="header-hamburger"
@@ -44,10 +49,10 @@ export default function Header() {
         </button>
         {/* Desktop nav (always rendered, hidden by CSS on mobile) */}
         <ul className="header-links">
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><Link href="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
+          <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>About</Link></li>
+          <li><Link href="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
+          <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
         </ul>
       </nav>
       {/* Mobile dropdown */}
@@ -57,10 +62,10 @@ export default function Header() {
         aria-hidden={!open}
       >
         <ul>
-          <li><a href="#overview" onClick={handleLinkClick}>Overview</a></li>
-          <li><a href="#about" onClick={handleLinkClick}>About</a></li>
-          <li><a href="#projects" onClick={handleLinkClick}>Projects</a></li>
-          <li><a href="#contact" onClick={handleLinkClick}>Contact</a></li>
+          <li><Link href="/" onClick={handleLinkClick} className={isActive('/') ? 'active' : ''}>Home</Link></li>
+          <li><Link href="/about" onClick={handleLinkClick} className={isActive('/about') ? 'active' : ''}>About</Link></li>
+          <li><Link href="/projects" onClick={handleLinkClick} className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
+          <li><Link href="/contact" onClick={handleLinkClick} className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
         </ul>
       </div>
     </header>

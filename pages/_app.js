@@ -10,10 +10,14 @@ import '../styles/globals.css'
 export default function App({ Component, pageProps }) {
   useEffect(() => {
     AOS.init({
-      once: false, // <-- Change to false so animations trigger every time on scroll
-      duration: 1200,
-      offset: 120,
-      easing: 'ease-in-out',
+      once: true, // Only animate once to prevent layout shifts
+      duration: 800, // Shorter duration for better UX
+      offset: 50, // Smaller offset to trigger earlier
+      easing: 'ease-out',
+      disable: false, // Enable on all devices
+      startEvent: 'DOMContentLoaded', // Start after DOM is ready
+      initClassName: 'aos-init', // Class applied after initialization
+      animatedClassName: 'aos-animate', // Class applied on animation
     });
 
     // nprogress route change events
