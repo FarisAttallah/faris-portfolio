@@ -1,46 +1,53 @@
-import 'aos/dist/aos.css';
-import 'nprogress/nprogress.css'; // <-- Import nprogress styles
 import { useEffect } from 'react';
-import AOS from 'aos';
-import Head from 'next/head';
-import Router from 'next/router';
-import NProgress from 'nprogress';
-import '../styles/globals.css'
+import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import '../styles/globals.css';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+const plexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+  weight: ['400', '500', '600'],
+  display: 'swap',
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500'],
+  display: 'swap',
+});
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
-    AOS.init({
-      once: true, // Only animate once to prevent layout shifts
-      duration: 800, // Shorter duration for better UX
-      offset: 50, // Smaller offset to trigger earlier
-      easing: 'ease-out',
-      disable: false, // Enable on all devices
-      startEvent: 'DOMContentLoaded', // Start after DOM is ready
-      initClassName: 'aos-init', // Class applied after initialization
-      animatedClassName: 'aos-animate', // Class applied on animation
-    });
+    const items = document.querySelectorAll('[data-reveal]');
+    if (!items.length) return;
 
-    // nprogress route change events
-    const handleStart = () => NProgress.start();
-    const handleStop = () => NProgress.done();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
 
-    Router.events.on('routeChangeStart', handleStart);
-    Router.events.on('routeChangeComplete', handleStop);
-    Router.events.on('routeChangeError', handleStop);
-
-    return () => {
-      Router.events.off('routeChangeStart', handleStart);
-      Router.events.off('routeChangeComplete', handleStop);
-      Router.events.off('routeChangeError', handleStop);
-    };
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   return (
-    <>
-      <Head>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-      </Head>
+    <div className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable} app-shell`}>
       <Component {...pageProps} />
-    </>
+    </div>
   );
 }
